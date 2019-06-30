@@ -5,6 +5,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ReactRouterDOM from 'react-router-dom'
 
+import { id } from './id'
+
 import App from '@'
 
 window.PropTypes = PropTypes
@@ -13,7 +15,7 @@ window.ReactDOM = ReactDOM
 window.ReactRouterDOM = ReactRouterDOM
 
 function render () {
-  const targetElement = document.getElementById('app')
+  const targetElement = document.getElementById(id)
 
   if (targetElement) {
     const originalHTML = targetElement.innerHTML

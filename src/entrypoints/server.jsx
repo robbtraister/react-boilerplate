@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { ServerStyleSheet } from 'styled-components'
 
+import { id } from './id'
+
 import App from '@'
 
 const Page = ({ context = {}, location, ...props }) => {
@@ -18,7 +20,7 @@ const Page = ({ context = {}, location, ...props }) => {
         <script src='/dist/engine.js' defer='defer' />
       </head>
       <body>
-        <div id='app'>
+        <div id={id}>
           <StaticRouter context={context} location={location}>
             <App />
           </StaticRouter>
