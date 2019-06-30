@@ -1,0 +1,48 @@
+{
+  "name": "init-react-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/server",
+  "scripts": {
+    "build": "npm run clean && webpack --config ./webpack",
+    "clean": "rm -rf ./dist",
+    "dev": "npm run watch & npm run start",
+    "prod": "NODE_ENV=production npm run build && NODE_ENV=production npm run start",
+    "start": "node src/server",
+    "test": "standard",
+    "watch": "npm run build -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robbtraister/init-react-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robbtraister/init-react-app/issues"
+  },
+  "homepage": "https://github.com/robbtraister/init-react-app#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "styled-components": "^4.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.0.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "sass": "^1.22.1",
+    "sass-loader": "^7.1.0",
+    "standard": "^12.0.1",
+    "url-loader": "^2.0.1",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5"
+  }
+}
