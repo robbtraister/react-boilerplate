@@ -12,6 +12,7 @@ const Page = ({ context = {}, location, ...props }) => {
     <html>
       <head>
         <title>Hello!</title>
+        <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
         <link type='text/css' rel='stylesheet' href='/dist/styles.css' />
         <styled-components />
         <script src='/dist/engine.js' defer='defer' />

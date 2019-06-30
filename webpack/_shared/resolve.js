@@ -5,7 +5,7 @@ const { appDir, rootDir, srcDir } = require('../../environment')
 module.exports = {
   resolve: {
     alias: {
-      'prop-types': require.resolve('prop-types'),
+      'prop-types$': require.resolve('prop-types'),
       'react': require.resolve('react'),
       'react-dom$': require.resolve('react-dom'),
       'react-router-dom': require.resolve('react-router-dom'),
