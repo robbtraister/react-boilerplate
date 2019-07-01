@@ -5,17 +5,21 @@
 .banner {
   background-color: #080;
   color: #ff0;
-  position: relative;
+  padding: 5px 10px;
   width: 100%;
 
   .title {
-    // position: absolute;
-    left: 10px;
+    float: left;
   }
 
   .welcome {
-    // position: absolute;
-    right: 10px;
+    float: right;
+  }
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
   }
 }
 
