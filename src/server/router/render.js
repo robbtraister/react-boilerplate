@@ -2,11 +2,14 @@
 
 const express = require('express')
 
+const render = require('../../../dist/server').default
+
 function router () {
   const router = express.Router()
 
-  router.use(require('./assets')())
-  router.use(require('./render')())
+  router.use((req, res, next) => {
+    res.send(render())
+  })
 
   return router
 }

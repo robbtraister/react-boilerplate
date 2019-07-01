@@ -7,10 +7,19 @@ import styles from './styles.scss'
 
 const location = (typeof window === 'undefined') ? 'server' : 'client'
 
-const Div = styled.div`
-  color: #ff0;
-`
+//const Div = styled.div`
+//  color: #ff0;
+//`
 
-const App = () => <Div className={styles.main}>hello, {location}</Div>
+const App = () =>
+  <div className={styles.body}>
+    <nav className={styles.banner}>
+      <div className={styles.title}>Boilerplate</div>
+      <div className={styles.welcome}>hello, {location}</div>
+    </nav>
+    <div className={styles.main}>
+      React Boilerplate Application
+    </div>
+  </div>
 
 export default App

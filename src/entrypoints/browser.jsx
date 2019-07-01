@@ -5,7 +5,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ReactRouterDOM from 'react-router-dom'
 
-import { id } from './id'
+import { id } from './data'
 
 import App from '@'
 

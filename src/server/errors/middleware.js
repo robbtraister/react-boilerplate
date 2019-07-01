@@ -2,14 +2,6 @@
 
 const { isProd } = require('../../../environment')
 
-function redirectHandler (err, req, res, next) {
-  if (err.status >= 300 && err.status < 400 && err.location) {
-    res.redirect(err.location)
-  } else {
-    next()
-  }
-}
-
 const failHandler = (isProd)
   ? function failHandler (err, req, res, next) {
     console.error(err)
@@ -20,7 +12,12 @@ const failHandler = (isProd)
     res.status(500).send(err.message || err.body || err)
   }
 
-module.exports = () => [
-  redirectHandler,
-  failHandler
-]
+function redirectHandler (err, req, res, next) {
+  if (err.status >= 300 && err.status < 400 && err.location) {
+    res.redirect(err.location)
+  } else {
+    failHandler(err, req, res, next)
+  }
+}
+
+module.exports = () => redirectHandler
