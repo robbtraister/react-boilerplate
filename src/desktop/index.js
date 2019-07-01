@@ -10,7 +10,7 @@ const { distDir } = require('../../environment')
 // let win
 
 function createWindow () {
-  const win = new BrowserWindow({
+  let win = new BrowserWindow({
     width: 1080,
     height: 800,
     backgroundColor: '#fff',
