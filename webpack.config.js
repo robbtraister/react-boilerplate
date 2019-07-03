@@ -46,6 +46,12 @@ const resolve = {
 
 const rules = (server) => [
   {
+    test: /\.(eot|gif|jpe?g|otf|png|svg|ttf|woff2?)$/,
+    use: {
+      loader: 'url-loader'
+    }
+  },
+  {
     test: /\.s?[ac]ss$/,
     use: (
       (server)
@@ -74,7 +80,7 @@ const rules = (server) => [
     }
   },
   {
-    test: /\.jsx?$/,
+    test: /\.[jt]sx?$/,
     exclude: /[\\/]node_modules[\\/]/,
     use: {
       loader: 'babel-loader',
@@ -107,13 +113,15 @@ module.exports = [
       ]
     },
     output: {
-      filename: '[name].js',
+      filename: '[name]/main.js',
+      chunkFilename: 'chunks/[name].js',
       path: distDir,
       publicPath: '/dist/'
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name].css'
+        filename: '[name]/styles.css',
+        chunkFilename: 'chunks/[name].js'
       }),
       new HtmlWebpackPlugin({
         chunks: ['browser'],
@@ -155,7 +163,7 @@ module.exports = [
       rules: rules(true)
     },
     output: {
-      filename: '[name].js',
+      filename: '[name]/index.js',
       libraryTarget: 'commonjs',
       path: distDir
     },

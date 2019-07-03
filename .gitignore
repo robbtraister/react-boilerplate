@@ -2,5 +2,6 @@
 
 .env
 
+.clinic/
 dist/
 node_modules/

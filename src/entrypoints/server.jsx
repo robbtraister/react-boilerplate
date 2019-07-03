@@ -15,9 +15,9 @@ const Page = ({ context = {}, location, ...props }) => {
       <head>
         <title>{title}</title>
         <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
-        <link type='text/css' rel='stylesheet' href='/dist/browser.css' />
+        <link type='text/css' rel='stylesheet' href='/dist/browser/styles.css' />
         <styled-components />
-        <script src='/dist/browser.js' defer='defer' />
+        <script src='/dist/browser/main.js' defer='defer' />
       </head>
       <body>
         <div id={id}>

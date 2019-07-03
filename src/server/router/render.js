@@ -1,11 +1,11 @@
 'use strict'
 
-const express = require('express')
+const { Router } = require('express')
 
 const render = require('../../../dist/server').default
 
 function router () {
-  const router = express.Router()
+  const router = Router()
 
   router.use((req, res, next) => {
     res.send(render())

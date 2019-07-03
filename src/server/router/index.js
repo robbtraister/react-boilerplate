@@ -1,9 +1,9 @@
 'use strict'
 
-const express = require('express')
+const { Router } = require('express')
 
 function router () {
-  const router = express.Router()
+  const router = Router()
 
   router.use(require('./assets')())
   router.use(require('./render')())
