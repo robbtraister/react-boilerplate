@@ -1,7 +1,5 @@
 'use strict'
 
-const Unauthorized = require('./unauthorized')
-
 const { login } = require('../../../dist/server')
 
 const { isProd } = require('../../../environment')

@@ -1,9 +1,22 @@
 'use strict'
 
+const bodyParser = require('body-parser')
+const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 
-module.exports = () => new LocalStrategy(
-  function (username, password, done) {
-    done(null, username)
-  }
-)
+const { authenticate } = require('./jwt')
+
+module.exports = () => {
+  passport.use(
+    new LocalStrategy(
+      function (username, password, done) {
+        done(null, username)
+      }
+    )
+  )
+
+  return [
+    bodyParser.urlencoded({ extended: true }),
+    authenticate('local', { successRedirect: '/' })
+  ]
+}

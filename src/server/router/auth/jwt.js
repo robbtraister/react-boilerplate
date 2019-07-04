@@ -1,20 +1,67 @@
 'use strict'
 
+const cookieParser = require('cookie-parser')
+const jsonwebtoken = require('jsonwebtoken')
+const passport = require('passport')
 const { Strategy: JwtStrategy } = require('passport-jwt')
+
+const { Redirect } = require('../../errors')
 
 const { cookie, secret } = require('../../../../environment')
 
 const algorithm = 'HS512'
 
-module.exports = () => new JwtStrategy(
-  {
-    secretOrKey: secret,
-    jwtFromRequest: (req) => req && req.cookies && req.cookies[cookie],
-    algorithms: [algorithm]
-  },
-  function (payload, done) {
-    done(null, payload.usr)
+function authenticate (strategy, options = {}) {
+  return (req, res, next) => {
+    if (req.user) {
+      next()
+    } else {
+      passport.authenticate(strategy, (err, user) => {
+        if (err) {
+          next(err)
+        } else if (user) {
+          req.user = user
+          const token = jsonwebtoken.sign(
+            { usr: req.user },
+            secret,
+            { algorithm }
+          )
+          res.cookie(
+            cookie,
+            token,
+            {
+              httpOnly: true
+            }
+          )
+          ;(options.successRedirect)
+            ? next(new Redirect(options.successRedirect))
+            : next()
+        } else {
+          next()
+        }
+      })(req, res, next)
+    }
   }
-)
+}
 
-module.exports.algorithm = algorithm
+module.exports = () => {
+  passport.use(
+    new JwtStrategy(
+      {
+        secretOrKey: secret,
+        jwtFromRequest: (req) => req && req.cookies && req.cookies[cookie],
+        algorithms: [algorithm]
+      },
+      function (payload, done) {
+        done(null, payload.usr)
+      }
+    )
+  )
+
+  return [
+    cookieParser(),
+    authenticate('jwt')
+  ]
+}
+
+module.exports.authenticate = authenticate
