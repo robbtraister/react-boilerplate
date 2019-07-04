@@ -9,6 +9,7 @@ const { distDir, rootDir } = require('../../../environment')
 function router () {
   const router = express.Router()
 
+  router.use('/favicon.ico', (req, res, next) => { res.sendStatus(404) })
   router.use(/\/dist\/(desktop|server)/, (req, res, next) => res.sendStatus(404))
   router.use('/dist', express.static(distDir, { fallthrough: false }))
   router.use('/resources', express.static(path.join(rootDir, 'resources'), { fallthrough: false }))
