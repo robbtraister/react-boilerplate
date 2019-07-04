@@ -15,9 +15,21 @@ const { id, title } = require(path.join(srcDir, 'entrypoints', 'data'))
 const devtool = (isProd)
   ? false
   : 'eval-source-map'
+
 const mode = (isProd)
   ? 'production'
   : 'development'
+
+const optimization = {
+  minimizer: [
+    new TerserWebpackPlugin({
+      sourceMap: true
+    }),
+    new OptimizeCSSAssetsWebpackPlugin({
+    })
+  ]
+}
+
 const resolve = {
   alias: {
     'prop-types$': require.resolve('prop-types'),
@@ -97,7 +109,6 @@ module.exports = [
     devtool,
     entry: {
       browser: path.join(srcDir, 'entrypoints', 'browser'),
-      desktop: path.join(srcDir, 'entrypoints', 'desktop'),
       login: path.join(srcDir, 'entrypoints', 'login')
     },
     mode,
@@ -105,13 +116,16 @@ module.exports = [
       rules: rules()
     },
     optimization: {
-      minimizer: [
-        new TerserWebpackPlugin({
-          sourceMap: true
-        }),
-        new OptimizeCSSAssetsWebpackPlugin({
-        })
-      ]
+      ...optimization,
+      splitChunks: {
+        chunks: 'all',
+        minSize: 0,
+        name (mod, chunks, cacheGroupKey) {
+          return (chunks.length > 1)
+            ? 'all'
+            : chunks[0].name
+        }
+      }
     },
     output: {
       filename: '[name]/main.js',
@@ -122,10 +136,10 @@ module.exports = [
     plugins: [
       new MiniCssExtractPlugin({
         filename: '[name]/styles.css',
-        chunkFilename: 'chunks/[name].js'
+        chunkFilename: 'chunks/[name].css'
       }),
       new HtmlWebpackPlugin({
-        chunks: ['browser'],
+        excludeChunks: ['login'],
         filename: 'index.html',
         id,
         inject: 'head',
@@ -133,19 +147,45 @@ module.exports = [
         title
       }),
       new HtmlWebpackPlugin({
-        chunks: ['desktop'],
-        filename: 'desktop.html',
-        id,
-        inject: 'head',
-        template: path.join(srcDir, 'entrypoints', 'desktop.html'),
-        title
-      }),
-      new HtmlWebpackPlugin({
-        chunks: ['login'],
+        excludeChunks: ['browser'],
         filename: 'login.html',
         id,
         inject: 'head',
         template: path.join(srcDir, 'entrypoints', 'login.html'),
+        title
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        defaultAttribute: 'defer'
+      })
+    ],
+    resolve,
+    target: 'web'
+  },
+  {
+    devtool,
+    entry: {
+      desktop: path.join(srcDir, 'entrypoints', 'desktop')
+    },
+    mode,
+    module: {
+      rules: rules()
+    },
+    optimization,
+    output: {
+      filename: '[name]/main.js',
+      chunkFilename: 'chunks/[name].js',
+      path: distDir,
+      publicPath: '/dist/'
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name]/styles.css'
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'desktop.html',
+        id,
+        inject: 'head',
+        template: path.join(srcDir, 'entrypoints', 'desktop.html'),
         title
       }),
       new ScriptExtHtmlWebpackPlugin({

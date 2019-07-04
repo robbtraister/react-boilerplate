@@ -11,8 +11,10 @@ function router () {
 
   router.use('/favicon.ico', (req, res, next) => { res.sendStatus(404) })
   router.use(/\/dist\/(desktop|server)/, (req, res, next) => res.sendStatus(404))
-  router.use('/dist', express.static(distDir, { fallthrough: false }))
-  router.use('/resources', express.static(path.join(rootDir, 'resources'), { fallthrough: false }))
+  router.use('/dist', express.static(distDir))
+  router.use('/resources', express.static(path.join(rootDir, 'resources')))
+  // fallthrough logs an error; manual 404 avoids polluting logs
+  router.use(/\/(dist|resources)/, (req, res, next) => { res.sendStatus(404) })
 
   return router
 }

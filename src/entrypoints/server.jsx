@@ -16,8 +16,10 @@ const Page = ({ Component = App, context = {}, entry = 'browser', ...props }) =>
       <head>
         <title>{title}</title>
         <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
+        <link type='text/css' rel='stylesheet' href={`/dist/chunks/all.css`} />
         <link type='text/css' rel='stylesheet' href={`/dist/${entry}/styles.css`} />
         <styled-components />
+        <script type='application/javascript' src={`/dist/chunks/all.js`} defer='defer' />
         <script type='application/javascript' src={`/dist/${entry}/main.js`} defer='defer' />
       </head>
       <body>
