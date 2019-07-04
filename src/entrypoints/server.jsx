@@ -18,7 +18,7 @@ const Page = ({ Component = App, context = {}, entry = 'browser', location, ...p
         <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
         <link type='text/css' rel='stylesheet' href={`/dist/${entry}/styles.css`} />
         <styled-components />
-        <script src={`/dist/${entry}/main.js`} defer='defer' />
+        <script type='application/javascript' src={`/dist/${entry}/main.js`} defer='defer' />
       </head>
       <body>
         <div id={id}>
@@ -26,6 +26,7 @@ const Page = ({ Component = App, context = {}, entry = 'browser', location, ...p
             <Component {...props} />
           </StaticRouter>
         </div>
+        <script type='application/javascript' src='/auth/user?jsonp=setUser' defer='defer' />
       </body>
     </html>
   )

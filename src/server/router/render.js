@@ -8,7 +8,7 @@ function router () {
   const router = Router()
 
   router.use((req, res, next) => {
-    res.send(render())
+    res.send(render({ user: req.user }))
   })
 
   return router

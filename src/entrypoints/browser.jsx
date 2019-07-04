@@ -14,6 +14,11 @@ window.React = React
 window.ReactDOM = ReactDOM
 window.ReactRouterDOM = ReactRouterDOM
 
+let user
+window.setUser = function (u) {
+  user = u
+}
+
 function render () {
   const targetElement = document.getElementById(id)
 
@@ -23,7 +28,7 @@ function render () {
     try {
       ReactDOM.render(
         <ReactRouterDOM.BrowserRouter>
-          <App />
+          <App user={user} />
         </ReactRouterDOM.BrowserRouter>,
         targetElement
       )
