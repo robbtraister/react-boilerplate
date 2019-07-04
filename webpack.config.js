@@ -106,7 +106,7 @@ const rules = (server) => [
     use: [ 'json-loader', 'yaml-loader' ]
   },
   {
-    test: /\.[jt]sx?$/,
+    test: /\.m?[jt]sx?$/,
     exclude: /[\\/]node_modules[\\/]/,
     use: {
       loader: 'babel-loader',
