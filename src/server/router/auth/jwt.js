@@ -22,7 +22,7 @@ function authenticate (strategy, options = {}) {
     if (req.user) {
       next()
     } else {
-      passport.authenticate(strategy, (err, user) => {
+      passport.authenticate(strategy, options, (err, user) => {
         if (err) {
           next(err)
         } else if (user) {

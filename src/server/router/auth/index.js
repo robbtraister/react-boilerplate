@@ -26,6 +26,7 @@ function router () {
   router.use(passport.initialize())
 
   router.use('/auth/form', require('./local')())
+  router.use('/auth/google', require('./google')())
   router.use(require('./jwt')())
 
   router.use((req, res, next) => {

@@ -10,7 +10,7 @@ module.exports = () => {
   passport.use(
     new LocalStrategy(
       function (username, password, done) {
-        done(null, username)
+        done(null, { name: username })
       }
     )
   )

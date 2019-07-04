@@ -10,7 +10,7 @@ const Header = ({ user }) =>
     <img className={styles.logo} src={logo} />
     <div className={styles.title}>Boilerplate</div>
     { user &&
-      <div className={styles.welcome}>hello, {user}
+      <div className={styles.welcome}>hello, {user.name}
         <a href='/logout'>Sign Out</a>
       </div>
     }

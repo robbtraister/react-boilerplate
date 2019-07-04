@@ -16,10 +16,18 @@ const serverDir = path.join(srcDir, 'server')
 const cookie = process.env.COOKIE
 const secret = process.env.SECRET
 
+const google = (process.env.GOOGLE_CLIENT_ID)
+  ? {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET
+  }
+  : null
+
 module.exports = {
   appDir,
   cookie,
   distDir,
+  google,
   isDev,
   isProd,
   rootDir,
