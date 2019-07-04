@@ -10,7 +10,7 @@ import { id, title } from './data'
 import App from '@'
 import Login from '@/login'
 
-const Page = ({ Component = App, context = {}, entry = 'browser', location, ...props }) => {
+const Page = ({ Component = App, context = {}, entry = 'browser', ...props }) => {
   return (
     <html>
       <head>
@@ -22,7 +22,7 @@ const Page = ({ Component = App, context = {}, entry = 'browser', location, ...p
       </head>
       <body>
         <div id={id}>
-          <StaticRouter context={context} location={location}>
+          <StaticRouter context={context} location={props.location}>
             <Component {...props} />
           </StaticRouter>
         </div>

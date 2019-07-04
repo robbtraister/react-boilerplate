@@ -23,7 +23,7 @@ function render () {
     try {
       ReactDOM.render(
         <ReactRouterDOM.BrowserRouter>
-          <Login />
+          <Login location={window.location.href} />
         </ReactRouterDOM.BrowserRouter>,
         targetElement
       )

@@ -12,6 +12,12 @@ const { cookie, secret } = require('../../../../environment')
 const algorithm = 'HS512'
 
 function authenticate (strategy, options = {}) {
+  const successRedirect = (!options.successRedirect)
+    ? null
+    : (options.successRedirect instanceof Function)
+      ? options.successRedirect
+      : () => options.successRedirect
+
   return (req, res, next) => {
     if (req.user) {
       next()
@@ -33,8 +39,8 @@ function authenticate (strategy, options = {}) {
               httpOnly: true
             }
           )
-          ;(options.successRedirect)
-            ? next(new Redirect(options.successRedirect))
+          ;(successRedirect)
+            ? next(new Redirect(successRedirect(req)))
             : next()
         } else {
           next()

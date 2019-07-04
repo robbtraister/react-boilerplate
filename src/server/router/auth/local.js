@@ -17,6 +17,6 @@ module.exports = () => {
 
   return [
     bodyParser.urlencoded({ extended: true }),
-    authenticate('local', { successRedirect: '/' })
+    authenticate('local', { successRedirect: (req) => (req && req.body && req.body.redirect) || '/' })
   ]
 }
