@@ -1,5 +1,5 @@
 {
-  "name": "init-react-app",
+  "name": "react-boilerplate",
   "version": "0.0.0",
   "description": "",
   "main": "src/server",
@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robbtraister/init-react-app.git"
+    "url": "git+https://github.com/robbtraister/react-boilerplate.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/robbtraister/init-react-app/issues"
+    "url": "https://github.com/robbtraister/react-boilerplate/issues"
   },
-  "homepage": "https://github.com/robbtraister/init-react-app#readme",
+  "homepage": "https://github.com/robbtraister/react-boilerplate#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
