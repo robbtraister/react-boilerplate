@@ -3,7 +3,7 @@
 import React from 'react'
 
 import styles from './styles.scss'
-import logo from './logo.svg'
+import logo from '&/logo.svg'
 
 const Header = ({ user }) =>
   <nav className={styles.banner}>

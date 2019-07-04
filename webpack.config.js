@@ -8,7 +8,14 @@ const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 
-const { appDir, distDir, isProd, rootDir, srcDir } = require('./environment')
+const {
+  appDir,
+  distDir,
+  isProd,
+  resourcesDir,
+  rootDir,
+  srcDir
+} = require('./environment')
 
 const { id, title } = require(path.join(srcDir, 'entrypoints', 'data'))
 
@@ -39,6 +46,7 @@ const resolve = {
     'react-router-dom': require.resolve('react-router-dom'),
     'styled-components': require.resolve('styled-components'),
     '~': rootDir,
+    '&': resourcesDir,
     '$': srcDir,
     '@': appDir
   },
@@ -49,6 +57,8 @@ const resolve = {
     '.mjs',
     '.jsx',
     '.js',
+    '.yaml',
+    '.yml',
     '.json',
     '.scss',
     '.sass',
@@ -90,6 +100,10 @@ const rules = (server) => [
         implementation: require('sass')
       }
     }
+  },
+  {
+    test: /\.ya?ml$/,
+    use: [ 'json-loader', 'yaml-loader' ]
   },
   {
     test: /\.[jt]sx?$/,

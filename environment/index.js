@@ -9,6 +9,7 @@ const isDev = !isProd
 
 const rootDir = path.resolve(__dirname, '..')
 const distDir = path.join(rootDir, 'dist')
+const resourcesDir = path.join(rootDir, 'resources')
 const srcDir = path.join(rootDir, 'src')
 const appDir = path.join(srcDir, 'app')
 const serverDir = path.join(srcDir, 'server')
@@ -30,6 +31,7 @@ module.exports = {
   google,
   isDev,
   isProd,
+  resourcesDir,
   rootDir,
   secret,
   serverDir,
