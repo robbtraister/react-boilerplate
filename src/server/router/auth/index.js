@@ -6,6 +6,7 @@ const { Router } = require('express')
 const jsonwebtoken = require('jsonwebtoken')
 const passport = require('passport')
 
+const { algorithm } = require('./jwt')
 const { Redirect, Unauthorized } = require('../../errors')
 
 const { cookie, secret } = require('../../../../environment')
@@ -18,8 +19,8 @@ passport.deserializeUser(function (token, done) {
   done(null, JSON.parse(token))
 })
 
-require('./local')
-require('./jwt')
+passport.use(require('./local')())
+passport.use(require('./jwt')())
 
 function authenticate (strategy, options = {}) {
   return (req, res, next) => {
@@ -31,9 +32,14 @@ function authenticate (strategy, options = {}) {
           next(err)
         } else if (user) {
           req.user = user
+          const token = jsonwebtoken.sign(
+            { usr: req.user },
+            secret,
+            { algorithm }
+          )
           res.cookie(
             cookie,
-            jsonwebtoken.sign({ usr: req.user }, secret, { algorithm: 'HS512' }),
+            token,
             {
               httpOnly: true
             }
@@ -52,11 +58,18 @@ function authenticate (strategy, options = {}) {
 function router () {
   const router = Router()
 
-  router.use(bodyParser.urlencoded({ extended: true }))
+  router.use(/(\/auth)?\/(log|sign)out/, (req, res, next) => {
+    res.clearCookie(cookie)
+    next(new Redirect('/'))
+  })
+
   router.use(cookieParser())
   router.use(passport.initialize())
 
-  router.use('/auth/local', authenticate('local', { successRedirect: '/' }))
+  router.use('/auth/form',
+    bodyParser.urlencoded({ extended: true }),
+    authenticate('local', { successRedirect: '/' })
+  )
   router.use(authenticate('jwt'))
 
   router.use((req, res, next) => {
