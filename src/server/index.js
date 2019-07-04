@@ -32,7 +32,12 @@ function server (port) {
       require('./router')()(req, res, next)
     })
     app.use((err, req, res, next) => {
-      require('./errors/middleware')()(err, req, res, next)
+      [].concat(require('./errors/middleware')())
+        .reverse()
+        .reduce(
+          (next, handler) => () => handler(err, req, res, next),
+          next
+        )()
     })
   }
 

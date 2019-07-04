@@ -1,23 +1,39 @@
 'use strict'
 
+const Unauthorized = require('./unauthorized')
+
+const { login } = require('../../../dist/server')
+
 const { isProd } = require('../../../environment')
 
 const failHandler = (isProd)
   ? function failHandler (err, req, res, next) {
     console.error(err)
-    res.sendStatus(500)
+    res.sendStatus(err.status || 500)
   }
   : function failHandler (err, req, res, next) {
     console.error(err)
-    res.status(500).send(err.message || err.body || err)
+    res.status(err.status || 500).send(err.message || err.body || err)
   }
 
-function redirectHandler (err, req, res, next) {
-  if (err.status >= 300 && err.status < 400 && err.location) {
-    res.redirect(err.location)
+function loginHandler (err, req, res, next) {
+  if (err.status === 401) {
+    res.send(login())
   } else {
-    failHandler(err, req, res, next)
+    next()
   }
 }
 
-module.exports = () => redirectHandler
+function redirectHandler (err, req, res, next) {
+  if (err.status >= 299 && err.status < 400 && err.location) {
+    res.redirect(err.location)
+  } else {
+    next()
+  }
+}
+
+module.exports = () => [
+  redirectHandler,
+  loginHandler,
+  failHandler
+]

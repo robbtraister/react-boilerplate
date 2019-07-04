@@ -97,7 +97,8 @@ module.exports = [
     devtool,
     entry: {
       browser: path.join(srcDir, 'entrypoints', 'browser'),
-      desktop: path.join(srcDir, 'entrypoints', 'desktop')
+      desktop: path.join(srcDir, 'entrypoints', 'desktop'),
+      login: path.join(srcDir, 'entrypoints', 'login')
     },
     mode,
     module: {
@@ -137,6 +138,14 @@ module.exports = [
         id,
         inject: 'head',
         template: path.join(srcDir, 'entrypoints', 'desktop.html'),
+        title
+      }),
+      new HtmlWebpackPlugin({
+        chunks: ['login'],
+        filename: 'login.html',
+        id,
+        inject: 'head',
+        template: path.join(srcDir, 'entrypoints', 'login.html'),
         title
       }),
       new ScriptExtHtmlWebpackPlugin({

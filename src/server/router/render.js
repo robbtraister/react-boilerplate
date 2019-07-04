@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 
-const render = require('../../../dist/server').default
+const { render } = require('../../../dist/server')
 
 function router () {
   const router = Router()

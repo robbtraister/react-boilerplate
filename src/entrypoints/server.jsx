@@ -8,21 +8,22 @@ import { ServerStyleSheet } from 'styled-components'
 import { id, title } from './data'
 
 import App from '@'
+import Login from '@/login'
 
-const Page = ({ context = {}, location, ...props }) => {
+const Page = ({ Component = App, context = {}, entry = 'browser', location, ...props }) => {
   return (
     <html>
       <head>
         <title>{title}</title>
         <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
-        <link type='text/css' rel='stylesheet' href='/dist/browser/styles.css' />
+        <link type='text/css' rel='stylesheet' href={`/dist/${entry}/styles.css`} />
         <styled-components />
-        <script src='/dist/browser/main.js' defer='defer' />
+        <script src={`/dist/${entry}/main.js`} defer='defer' />
       </head>
       <body>
         <div id={id}>
           <StaticRouter context={context} location={location}>
-            <App />
+            <Component {...props} />
           </StaticRouter>
         </div>
       </body>
@@ -56,4 +57,15 @@ function render (props) {
   }
 }
 
-export default render
+function login (props) {
+  return render({
+    ...props,
+    Component: Login,
+    entry: 'login'
+  })
+}
+
+export {
+  login,
+  render
+}

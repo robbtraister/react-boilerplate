@@ -6,6 +6,7 @@ function router () {
   const router = Router()
 
   router.use(require('./assets')())
+  router.use(require('./auth')())
   router.use(require('./render')())
 
   return router
