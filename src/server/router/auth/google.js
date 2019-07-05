@@ -32,4 +32,4 @@ module.exports = (google)
 
     return router
   }
-  : (req, res, next) => { res.sendStatus(405) }
+  : () => (req, res, next) => { res.sendStatus(405) }

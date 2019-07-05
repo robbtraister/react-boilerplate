@@ -14,7 +14,7 @@ const srcDir = path.join(rootDir, 'src')
 const appDir = path.join(srcDir, 'app')
 const serverDir = path.join(srcDir, 'server')
 
-const cookie = process.env.COOKIE
+const cookie = process.env.COOKIE || 'token'
 const secret = process.env.SECRET
 
 const google = (process.env.GOOGLE_CLIENT_ID)
