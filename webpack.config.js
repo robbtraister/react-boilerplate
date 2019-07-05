@@ -122,7 +122,7 @@ module.exports = [
   {
     devtool,
     entry: {
-      browser: path.join(srcDir, 'entrypoints', 'browser'),
+      app: path.join(srcDir, 'entrypoints', 'browser'),
       login: path.join(srcDir, 'entrypoints', 'login')
     },
     mode,
@@ -136,21 +136,21 @@ module.exports = [
         minSize: 0,
         name (mod, chunks, cacheGroupKey) {
           return (chunks.length > 1)
-            ? 'all'
+            ? 'common'
             : chunks[0].name
         }
       }
     },
     output: {
-      filename: '[name]/main.js',
-      chunkFilename: 'chunks/[name].js',
+      filename: 'browser/[name].js',
+      chunkFilename: 'browser/[name].js',
       path: distDir,
       publicPath: '/dist/'
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name]/styles.css',
-        chunkFilename: 'chunks/[name].css'
+        filename: 'browser/[name].css',
+        chunkFilename: 'browser/[name].css'
       }),
       new HtmlWebpackPlugin({
         excludeChunks: ['login'],
@@ -161,7 +161,7 @@ module.exports = [
         title
       }),
       new HtmlWebpackPlugin({
-        excludeChunks: ['browser'],
+        excludeChunks: ['app'],
         filename: 'login.html',
         id,
         inject: 'head',

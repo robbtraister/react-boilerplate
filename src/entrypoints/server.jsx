@@ -10,17 +10,17 @@ import { id, title } from './data'
 import App from '@'
 import Login from '@/login'
 
-const Page = ({ Component = App, context = {}, entry = 'browser', ...props }) => {
+const Page = ({ Component = App, context = {}, entry = 'app', ...props }) => {
   return (
     <html>
       <head>
         <title>{title}</title>
         <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
-        <link type='text/css' rel='stylesheet' href={`/dist/chunks/all.css`} />
-        <link type='text/css' rel='stylesheet' href={`/dist/${entry}/styles.css`} />
+        <link type='text/css' rel='stylesheet' href={`/dist/browser/common.css`} />
+        <link type='text/css' rel='stylesheet' href={`/dist/browser/${entry}.css`} />
         <styled-components />
-        <script type='application/javascript' src={`/dist/chunks/all.js`} defer='defer' />
-        <script type='application/javascript' src={`/dist/${entry}/main.js`} defer='defer' />
+        <script type='application/javascript' src={`/dist/browser/common.js`} defer='defer' />
+        <script type='application/javascript' src={`/dist/browser/${entry}.js`} defer='defer' />
       </head>
       <body>
         <div id={id}>
