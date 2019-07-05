@@ -20,7 +20,7 @@ const {
 const { id, title } = require(path.join(srcDir, 'entrypoints', 'data'))
 
 const devtool = (isProd)
-  ? false
+  ? 'hidden-source-map'
   : 'eval-source-map'
 
 const mode = (isProd)
