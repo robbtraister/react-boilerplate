@@ -14,6 +14,8 @@ const srcDir = path.join(rootDir, 'src')
 const appDir = path.join(srcDir, 'app')
 const serverDir = path.join(srcDir, 'server')
 
+const fileLimit = Number(process.env.FILE_LIMIT) || 8192
+
 const cookie = process.env.COOKIE || 'token'
 const secret = process.env.SECRET
 
@@ -28,6 +30,7 @@ module.exports = {
   appDir,
   cookie,
   distDir,
+  fileLimit,
   google,
   isDev,
   isProd,

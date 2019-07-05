@@ -11,6 +11,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const {
   appDir,
   distDir,
+  fileLimit,
   isProd,
   resourcesDir,
   rootDir,
@@ -70,7 +71,15 @@ const rules = (server) => [
   {
     test: /\.(eot|gif|jpe?g|otf|png|svg|ttf|woff2?)$/,
     use: {
-      loader: 'url-loader'
+      loader: 'url-loader',
+      options: {
+        fallback: 'file-loader',
+        limit: fileLimit,
+        name: (isProd)
+          ? 'assets/[hash].[ext]'
+          : 'assets/[path][name].[ext]',
+        publicPath: '/dist/'
+      }
     }
   },
   {
