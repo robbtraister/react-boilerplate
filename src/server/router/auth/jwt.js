@@ -12,11 +12,11 @@ const { cookie, secret } = require('../../../../environment')
 const algorithm = 'HS512'
 
 function authenticate (strategy, options = {}) {
-  const successRedirect = (!options.successRedirect)
+  const successRedirect = !options.successRedirect
     ? null
-    : (options.successRedirect instanceof Function)
-      ? options.successRedirect
-      : () => options.successRedirect
+    : options.successRedirect instanceof Function
+    ? options.successRedirect
+    : () => options.successRedirect
 
   return (req, res, next) => {
     if (req.user) {
@@ -27,21 +27,13 @@ function authenticate (strategy, options = {}) {
           next(err)
         } else if (user) {
           req.user = user
-          const token = jsonwebtoken.sign(
-            { usr: req.user },
-            secret,
-            { algorithm }
-          )
-          res.cookie(
-            cookie,
-            token,
-            {
-              httpOnly: true
-            }
-          )
-          ;(successRedirect)
-            ? next(new Redirect(successRedirect(req)))
-            : next()
+          const token = jsonwebtoken.sign({ usr: req.user }, secret, {
+            algorithm
+          })
+          res.cookie(cookie, token, {
+            httpOnly: true
+          })
+          successRedirect ? next(new Redirect(successRedirect(req))) : next()
         } else {
           next()
         }
@@ -55,7 +47,7 @@ module.exports = () => {
     new JwtStrategy(
       {
         secretOrKey: secret,
-        jwtFromRequest: (req) => req && req.cookies && req.cookies[cookie],
+        jwtFromRequest: req => req && req.cookies && req.cookies[cookie],
         algorithms: [algorithm]
       },
       function (payload, done) {
@@ -64,10 +56,7 @@ module.exports = () => {
     )
   )
 
-  return [
-    cookieParser(),
-    authenticate('jwt')
-  ]
+  return [cookieParser(), authenticate('jwt')]
 }
 
 module.exports.authenticate = authenticate

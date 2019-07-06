@@ -8,15 +8,15 @@ const { authenticate } = require('./jwt')
 
 module.exports = () => {
   passport.use(
-    new LocalStrategy(
-      function (username, password, done) {
-        done(null, { name: username })
-      }
-    )
+    new LocalStrategy(function (username, password, done) {
+      done(null, { name: username })
+    })
   )
 
   return [
     bodyParser.urlencoded({ extended: true }),
-    authenticate('local', { successRedirect: (req) => (req && req.body && req.body.redirect) || '/' })
+    authenticate('local', {
+      successRedirect: req => (req && req.body && req.body.redirect) || '/'
+    })
   ]
 }

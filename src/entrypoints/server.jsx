@@ -16,11 +16,27 @@ const Page = ({ Component = App, context = {}, entry = 'app', ...props }) => {
       <head>
         <title>{title}</title>
         <link type='text/css' rel='stylesheet' href='/resources/styles.css' />
-        <link type='text/css' rel='stylesheet' href={`/dist/browser/common.css`} />
-        <link type='text/css' rel='stylesheet' href={`/dist/browser/${entry}.css`} />
+        <link
+          type='text/css'
+          rel='stylesheet'
+          href={`/dist/browser/common.css`}
+        />
+        <link
+          type='text/css'
+          rel='stylesheet'
+          href={`/dist/browser/${entry}.css`}
+        />
         <styled-components />
-        <script type='application/javascript' src={`/dist/browser/common.js`} defer='defer' />
-        <script type='application/javascript' src={`/dist/browser/${entry}.js`} defer='defer' />
+        <script
+          type='application/javascript'
+          src={`/dist/browser/common.js`}
+          defer='defer'
+        />
+        <script
+          type='application/javascript'
+          src={`/dist/browser/${entry}.js`}
+          defer='defer'
+        />
       </head>
       <body>
         <div id={id}>
@@ -28,7 +44,11 @@ const Page = ({ Component = App, context = {}, entry = 'app', ...props }) => {
             <Component {...props} />
           </StaticRouter>
         </div>
-        <script type='application/javascript' src='/auth/user?jsonp=setUser' defer='defer' />
+        <script
+          type='application/javascript'
+          src='/auth/user?jsonp=setUser'
+          defer='defer'
+        />
       </body>
     </html>
   )
@@ -48,13 +68,10 @@ function render (props) {
       throw redirect
     }
 
-    return `<!DOCTYPE html>${
-      html
-        .replace(
-          /<styled-components><\/styled-components>/g,
-          sheet.getStyleTags()
-        )
-    }`
+    return `<!DOCTYPE html>${html.replace(
+      /<styled-components><\/styled-components>/g,
+      sheet.getStyleTags()
+    )}`
   } finally {
     sheet.seal()
   }
@@ -68,7 +85,4 @@ function login (props) {
   })
 }
 
-export {
-  login,
-  render
-}
+export { login, render }

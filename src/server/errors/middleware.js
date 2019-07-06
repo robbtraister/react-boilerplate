@@ -25,13 +25,13 @@ function redirectHandler (err, req, res, next) {
   }
 }
 
-const reportHandler = (isProd)
+const reportHandler = isProd
   ? function reportHandler (err, req, res, next) {
-    res.sendStatus(err.status || 500)
-  }
+      res.sendStatus(err.status || 500)
+    }
   : function reportHandler (err, req, res, next) {
-    res.status(err.status || 500).send(err.message || err.body || err)
-  }
+      res.status(err.status || 500).send(err.message || err.body || err)
+    }
 
 module.exports = () => [
   redirectHandler,

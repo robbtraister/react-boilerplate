@@ -7,7 +7,7 @@ import loginStyles from './login.scss'
 
 import Header from './header'
 
-const Login = ({ location }) =>
+const Login = ({ location }) => (
   <div className={sharedStyles.body}>
     <Header />
     <div className={sharedStyles.main}>
@@ -17,8 +17,14 @@ const Login = ({ location }) =>
         <input type='hidden' name='redirect' value={location || '/'} />
         <input type='submit' value='login' />
       </form>
-      <a className={loginStyles.google} href={`/auth/google?redirect=${encodeURIComponent(location || '/')}`}>Google</a>
+      <a
+        className={loginStyles.google}
+        href={`/auth/google?redirect=${encodeURIComponent(location || '/')}`}
+      >
+        Google
+      </a>
     </div>
   </div>
+)
 
 export default Login

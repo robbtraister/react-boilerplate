@@ -10,43 +10,44 @@ const { google } = require('../../../../environment')
 
 const defaultRedirect = '/'
 
-module.exports = (google)
+module.exports = google
   ? () => {
-    passport.use(
-      new GoogleStrategy(
-        {
-          ...google,
-          callbackURL: 'http://localhost:8080/auth/google/callback'
-        },
-        function (accessToken, refreshToken, profile, done) {
-          done(null, {
-            email: profile.emails[0].value,
-            name: profile.name.givenName
-          })
-        }
+      passport.use(
+        new GoogleStrategy(
+          {
+            ...google,
+            callbackURL: 'http://localhost:8080/auth/google/callback'
+          },
+          function (accessToken, refreshToken, profile, done) {
+            done(null, {
+              email: profile.emails[0].value,
+              name: profile.name.givenName
+            })
+          }
+        )
       )
-    )
 
-    const router = Router()
+      const router = Router()
 
-    router.use('/callback', bodyParser.urlencoded({ extended: true }))
-    router.use((req, res, next) =>
-      authenticate(
-        'google',
-        {
-          scope: [ 'email', 'profile' ],
-          state: req.query.redirect ? JSON.stringify({ redirect: req.query.redirect }) : undefined,
-          successRedirect: (req) => {
+      router.use('/callback', bodyParser.urlencoded({ extended: true }))
+      router.use((req, res, next) =>
+        authenticate('google', {
+          scope: ['email', 'profile'],
+          state: req.query.redirect
+            ? JSON.stringify({ redirect: req.query.redirect })
+            : undefined,
+          successRedirect: req => {
             try {
               return JSON.parse(req.query.state).redirect || defaultRedirect
             } catch (_) {
               return defaultRedirect
             }
           }
-        }
-      )(req, res, next)
-    )
+        })(req, res, next)
+      )
 
-    return router
-  }
-  : () => (req, res, next) => { res.sendStatus(405) }
+      return router
+    }
+  : () => (req, res, next) => {
+      res.sendStatus(405)
+    }

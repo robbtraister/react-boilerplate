@@ -22,8 +22,8 @@ function server (port) {
   } else {
     app.use((req, res, next) => {
       Object.keys(require.cache)
-        .filter((mod) => !/[\\/]node_modules[\\/]/.test(mod))
-        .forEach((mod) => {
+        .filter(mod => !/[\\/]node_modules[\\/]/.test(mod))
+        .forEach(mod => {
           delete require.cache[mod]
         })
       next()
@@ -32,19 +32,15 @@ function server (port) {
       require('./router')()(req, res, next)
     })
     app.use((err, req, res, next) => {
-      [].concat(require('./errors/middleware')())
+      ;[]
+        .concat(require('./errors/middleware')())
         .reverse()
-        .reduce(
-          (next, handler) => () => handler(err, req, res, next),
-          next
-        )()
+        .reduce((next, handler) => () => handler(err, req, res, next), next)()
     })
   }
 
-  return app.listen(port, (err) => {
-    (err)
-      ? console.error(err)
-      : console.log(`Listening on port: ${port}`)
+  return app.listen(port, err => {
+    err ? console.error(err) : console.log(`Listening on port: ${port}`)
   })
 }
 
