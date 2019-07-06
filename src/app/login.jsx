@@ -17,7 +17,7 @@ const Login = ({ location }) =>
         <input type='hidden' name='redirect' value={location || '/'} />
         <input type='submit' value='login' />
       </form>
-      <a className={loginStyles.google} href='/auth/google'>Google</a>
+      <a className={loginStyles.google} href={`/auth/google?redirect=${encodeURIComponent(location || '/')}`}>Google</a>
     </div>
   </div>
 

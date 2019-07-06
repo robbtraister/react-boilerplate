@@ -8,6 +8,8 @@ const { Strategy: GoogleStrategy } = require('passport-google-oauth20')
 const { authenticate } = require('./jwt')
 const { google } = require('../../../../environment')
 
+const defaultRedirect = '/'
+
 module.exports = (google)
   ? () => {
     passport.use(
@@ -28,7 +30,22 @@ module.exports = (google)
     const router = Router()
 
     router.use('/callback', bodyParser.urlencoded({ extended: true }))
-    router.use(authenticate('google', { scope: [ 'email', 'profile' ], successRedirect: '/' }))
+    router.use((req, res, next) =>
+      authenticate(
+        'google',
+        {
+          scope: [ 'email', 'profile' ],
+          state: req.query.redirect ? JSON.stringify({ redirect: req.query.redirect }) : undefined,
+          successRedirect: (req) => {
+            try {
+              return JSON.parse(req.query.state).redirect || defaultRedirect
+            } catch (_) {
+              return defaultRedirect
+            }
+          }
+        }
+      )(req, res, next)
+    )
 
     return router
   }

@@ -11,7 +11,7 @@ function logHandler (err, req, res, next) {
 
 function loginHandler (err, req, res, next) {
   if (err.status === 401) {
-    res.send(login())
+    res.send(login({ location: req.originalUrl }))
   } else {
     next(err)
   }
