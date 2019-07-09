@@ -38,14 +38,16 @@ const optimization = {
   ]
 }
 
+const getAbsoluteRequire = (mod) =>
+  require.resolve(mod).replace(new RegExp(`(/node_modules/${mod})/.*`), (_, m) => m)
+
 const resolve = {
   alias: {
-    'prop-types$': require.resolve('prop-types'),
-    'react': require.resolve('react'),
-    'react-dom$': require.resolve('react-dom'),
-    'react-dom/server': require.resolve('react-dom/server'),
-    'react-router-dom': require.resolve('react-router-dom'),
-    'styled-components': require.resolve('styled-components'),
+    'prop-types': getAbsoluteRequire('prop-types'),
+    'react': getAbsoluteRequire('react'),
+    'react-dom': getAbsoluteRequire('react-dom'),
+    'react-router-dom': getAbsoluteRequire('react-router-dom'),
+    'styled-components': getAbsoluteRequire('styled-components'),
     '~': rootDir,
     '&': resourcesDir,
     '$': srcDir,
