@@ -238,7 +238,7 @@ module.exports = [
     },
     output: {
       filename: '[name]/index.js',
-      libraryTarget: 'commonjs',
+      libraryTarget: 'commonjs2',
       path: distDir
     },
     resolve,
